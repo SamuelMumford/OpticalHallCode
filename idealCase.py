@@ -9,15 +9,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cmx
 
-nR = 150
-nOme = 100
+nR = 250
+nOme = 250
 z = 0
 Dxx = 1
 Dzz = 1
 minO = 100
-maxO = 10000
+maxO = 50000
 minR = .05
-maxR = 5
+maxR = 3
 
 def makeReIm(nR, nOme, z, Dxx, Dzz, minO, maxO, minR, maxR):
     omes = np.linspace(minO, maxO, nOme).reshape(1, nOme)
@@ -48,16 +48,16 @@ print(np.amax(np.abs(pDiff/pB)))
 xs = np.linspace(minR, maxR, nR)
 omegas = np.linspace(minO, maxO, nOme)
 fig = plt.gcf()
-plt.contourf(xs, 2*np.pi*np.sqrt(np.divide(2,omegas)), pDiff.T, 100, cmap = cmx.jet)
+plt.contourf(xs, 2*np.pi*np.sqrt(np.divide(2,omegas)), (pDiff/pB).T, 100, cmap = cmx.jet)
 plt.colorbar()
-plt.title('Phase Error: Infinite Sample')
+plt.title('Relative Phase Error: Infinite Sample')
 plt.xlabel('x-coordinate (u)')
 plt.ylabel('Lambda (u)')
 plt.show()
 
 nH = 10
 hs = np.linspace(.1, 1, nH)
-layers = 5
+layers = 7
 for j in range(0, nH):
     h = hs[j]
     ind = -1
@@ -72,16 +72,16 @@ for j in range(0, nH):
     phase = np.arctan(imT/reT)
     pDiff = np.arctan(np.sin(phase - pB)/np.cos(phase - pB))
     print(np.amax(np.abs(pDiff/pB)))
-    fig = plt.gcf()
-    plt.contourf(xs, 2*np.pi*np.sqrt(np.divide(2,omegas)), pDiff.T, 100, cmap = cmx.jet)
-    plt.colorbar()
-    plt.title('Phase Error: h=' + str(np.round(100*h)/100))
-    plt.xlabel('x-coordinate (u)')
-    plt.ylabel('Lambda (u)')
-    plt.show()
+    # fig = plt.gcf()
+    # plt.contourf(xs, 2*np.pi*np.sqrt(np.divide(2,omegas)), pDiff.T, 100, cmap = cmx.jet)
+    # plt.colorbar()
+    # plt.title('Phase Error: h=' + str(np.round(100*h)/100))
+    # plt.xlabel('x-coordinate (u)')
+    # plt.ylabel('Lambda (u)')
+    # plt.show()
     
     fig = plt.gcf()
-    plt.contourf(xs, 2*np.pi*np.sqrt(np.divide(2,omegas)), (pDiff/pB).T, 100, cmap = cmx.jet)
+    plt.contourf(xs, 2*np.pi*np.sqrt(np.divide(2,omegas)), (pDiff/pB).T, 200, cmap = cmx.jet)
     plt.colorbar()
     plt.title('Relative Phase Error: h=' + str(np.round(100*h)/100))
     plt.xlabel('x-coordinate (u)')
