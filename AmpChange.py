@@ -41,22 +41,13 @@ def makeReIm(nR, nOme, z, Dxx, Dzz, minO, maxO, minR, maxR):
     imag = AmpE*imP
     return real, imag
 
-#Find the base phase response for an ideal source centered at (0, 0, 0)
-#Used to find how much phase changes with mirror charges/sample height
-def phaseB(nR, nOme, Dxx, minO, maxO, minR, maxR):
-    omes = np.linspace(minO, maxO, nOme).reshape(1, nOme)
-    ds = np.linspace(minR, maxR, nR).reshape(nR, 1)
-    dEq = np.sqrt(ds**2/Dxx)
-    phaseBase = -np.matmul(dEq, np.sqrt(omes/2))
-    return phaseBase
-
 #Find the real and imaginary parts of the response to an beam centered at (0,0,0)
 #for a set of spacial points and frequencies
 r, im = makeReIm(nR, nOme, z, Dxx, Dzz, minO, maxO, minR, maxR)
 #Convert to amplitude
 Amp = np.sqrt(r**2 + im**2)
 
-#Plot it, should just be rounding errors
+#Plot it
 xs = np.linspace(minR, maxR, nR)
 omegas = np.linspace(minO, maxO, nOme)
 fig = plt.gcf()
